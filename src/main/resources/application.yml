@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: car-rental
+  datasource:
+    # In-memory H2: data is lost on restart (see README, known limitations).
+    url: jdbc:h2:mem:carrental;DB_CLOSE_DELAY=-1;LOCK_TIMEOUT=10000   # bounded wait for row locks (10s)
+    username: sa
+    password: ""
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: create-drop   # POC only: schema generated from entities (see README, known limitations)
+
+logging:
+  level:
+    com.example.carrental: INFO
+
+app:
+  # Loads a small demo fleet and demo customers at startup. Set to false (APP_DEMO_DATA=false) for a clean start.
+  demo-data: ${APP_DEMO_DATA:true}
+  admin:
+    email: admin@carrental.local
+    password: ${APP_ADMIN_PASSWORD:ChangeMe-123}
+  rental:
+    zone: UTC                # single rental location / timezone
+    max-days: 30
+  eligibility:
+    min-age: 21
+    van-min-age: 25
+  licence:
+    provider: fake           # a real adapter would register as bean "governmentLicenceClient"
+    fake:
+      latency: 0ms
+    resilience:
+      timeout: 2s
+      max-attempts: 2        # total attempts, including the first
+      retry-backoff: 200ms
+      failure-threshold: 5   # consecutive failures that open the circuit
+      open-duration: 30s
+      max-concurrent-calls: 4
+      queue-capacity: 10

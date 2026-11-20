@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" data-bs-theme="dark">
+<head th:replace="~{fragments :: head('Error')}"></head>
+<body>
+<nav th:replace="~{fragments :: navbar}"></nav>
+
+<main class="container pb-5">
+    <h1 class="h3 mb-3">Something went wrong</h1>
+    <p class="hint">
+        <span th:text="${status}">500</span>
+        <span th:if="${error}" th:text="${error}">Internal Server Error</span>
+    </p>
+    <a th:href="@{/}" class="btn btn-accent">Back to search</a>
+</main>
+
+<script th:replace="~{fragments :: scripts}"></script>
+</body>
+</html>

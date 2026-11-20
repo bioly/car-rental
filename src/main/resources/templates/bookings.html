@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" data-bs-theme="dark">
+<head th:replace="~{fragments :: head('My bookings')}"></head>
+<body>
+<nav th:replace="~{fragments :: navbar}"></nav>
+
+<main class="container pb-5">
+    <h1 class="h3 mb-4">My bookings</h1>
+    <div th:replace="~{fragments :: flash}"></div>
+
+    <p class="hint" th:if="${#lists.isEmpty(reservations)}">
+        No bookings yet. <a th:href="@{/}">Search for a car</a>.
+    </p>
+
+    <div class="card" th:unless="${#lists.isEmpty(reservations)}">
+        <div class="table-responsive">
+            <table class="table align-middle mb-0">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Car type</th>
+                    <th>Pick-up</th>
+                    <th>Return</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="r : ${reservations}">
+                    <td th:text="${r.id}">1</td>
+                    <td th:text="${r.type.label}">Sedan</td>
+                    <td th:text="${#strings.replace(r.start, 'T', ' ')}">2030-06-10 10:00</td>
+                    <td th:text="${#strings.replace(r.end, 'T', ' ')}">2030-06-13 10:00</td>
+                    <td th:text="${#numbers.formatDecimal(r.totalPrice, 1, 2) + ' €'}">120.00 €</td>
+                    <td>
+                        <span class="badge"
+                              th:classappend="${r.status.name() == 'CONFIRMED'} ? 'text-bg-success' : 'text-bg-secondary'"
+                              th:text="${r.status.name()}">CONFIRMED</span>
+                    </td>
+                    <td class="text-end">
+                        <form th:if="${r.status.name() == 'CONFIRMED'}" th:action="@{/bookings/{id}/cancel(id=${r.id})}"
+                              method="post" class="m-0">
+                            <button type="submit" class="btn btn-outline-danger btn-sm">Cancel</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+<script th:replace="~{fragments :: scripts}"></script>
+</body>
+</html>

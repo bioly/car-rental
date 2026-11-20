@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="en" data-bs-theme="dark">
+<head th:fragment="head(title)">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${title} + ' · CarRental'">CarRental</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+
+<nav th:fragment="navbar" class="navbar navbar-expand-lg border-bottom mb-4">
+    <div class="container">
+        <a class="navbar-brand fw-bold" th:href="@{/}">Car<span class="accent">Rental</span></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+                aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item"><a class="nav-link" th:href="@{/}">Search</a></li>
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <a class="nav-link" th:href="@{/bookings}">My bookings</a>
+                </li>
+                <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+                    <a class="nav-link" th:href="@{/admin/fleet}">Fleet</a>
+                </li>
+            </ul>
+            <div class="d-flex align-items-center gap-2">
+                <span class="hint" sec:authorize="isAuthenticated()" sec:authentication="name">user</span>
+                <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post" class="m-0">
+                    <button type="submit" class="btn btn-outline-secondary btn-sm">Log out</button>
+                </form>
+                <a sec:authorize="isAnonymous()" th:href="@{/login}" class="btn btn-outline-secondary btn-sm">Log in</a>
+                <a sec:authorize="isAnonymous()" th:href="@{/register}" class="btn btn-accent btn-sm">Register</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div th:fragment="flash">
+    <div class="alert alert-success" role="alert" th:if="${success}" th:text="${success}">Done</div>
+    <div class="alert alert-danger" role="alert" th:if="${error}" th:text="${error}">Error</div>
+</div>
+
+<script th:fragment="scripts" th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}"></script>
+
+</body>
+</html>

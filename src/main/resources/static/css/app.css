@@ -1,0 +1,50 @@
+:root {
+    --accent: #4ade80;
+}
+
+body {
+    background: #0f1115;
+    min-height: 100vh;
+}
+
+.navbar {
+    background: #151922;
+}
+
+.navbar-brand .accent,
+.text-accent {
+    color: var(--accent);
+}
+
+.btn-accent {
+    --bs-btn-color: #04210f;
+    --bs-btn-bg: var(--accent);
+    --bs-btn-border-color: var(--accent);
+    --bs-btn-hover-color: #04210f;
+    --bs-btn-hover-bg: #22c55e;
+    --bs-btn-hover-border-color: #22c55e;
+    font-weight: 600;
+}
+
+.card {
+    background: #151922;
+    border-color: #262c3a;
+}
+
+.table {
+    --bs-table-bg: transparent;
+}
+
+.hero {
+    padding: 2.5rem 0 1.5rem;
+}
+
+.hero h1 {
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.hint {
+    color: #8b93a7;
+    font-size: 0.875rem;
+}

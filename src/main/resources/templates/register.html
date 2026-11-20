@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" data-bs-theme="dark">
+<head th:replace="~{fragments :: head('Register')}"></head>
+<body>
+<nav th:replace="~{fragments :: navbar}"></nav>
+
+<main class="container pb-5" style="max-width: 560px;">
+    <h1 class="h3 mb-2">Create an account</h1>
+    <p class="hint mb-4">
+        Your driving licence is verified with the national registry when you book.
+        The licence number is only ever shown masked.
+    </p>
+
+    <form class="card card-body" th:action="@{/register}" th:object="${form}" method="post" novalidate>
+        <div class="mb-3">
+            <label for="fullName" class="form-label">Full name</label>
+            <input type="text" class="form-control" id="fullName" th:field="*{fullName}"
+                   th:classappend="${#fields.hasErrors('fullName')} ? 'is-invalid'">
+            <div class="invalid-feedback" th:errors="*{fullName}">error</div>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" th:field="*{email}"
+                   th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'">
+            <div class="invalid-feedback" th:errors="*{email}">error</div>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" name="password"
+                   th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'">
+            <div class="invalid-feedback" th:errors="*{password}">error</div>
+        </div>
+        <div class="mb-3">
+            <label for="dateOfBirth" class="form-label">Date of birth</label>
+            <input type="date" class="form-control" id="dateOfBirth" th:field="*{dateOfBirth}"
+                   th:classappend="${#fields.hasErrors('dateOfBirth')} ? 'is-invalid'">
+            <div class="invalid-feedback" th:errors="*{dateOfBirth}">error</div>
+        </div>
+        <div class="mb-3">
+            <label for="licenceNumber" class="form-label">Driving licence number</label>
+            <input type="text" class="form-control" id="licenceNumber" th:field="*{licenceNumber}"
+                   th:classappend="${#fields.hasErrors('licenceNumber')} ? 'is-invalid'" autocomplete="off">
+            <div class="invalid-feedback" th:errors="*{licenceNumber}">error</div>
+            <div class="hint mt-1">8 to 12 letters or digits, e.g. DL12345678.</div>
+        </div>
+        <button type="submit" class="btn btn-accent">Register</button>
+    </form>
+</main>
+
+<script th:replace="~{fragments :: scripts}"></script>
+</body>
+</html>

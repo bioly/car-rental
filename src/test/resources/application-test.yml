@@ -1,0 +1,8 @@
+app:
+  demo-data: false
+  licence:
+    resilience:
+      timeout: 1s
+      retry-backoff: 1ms
+      max-concurrent-calls: 8
+      queue-capacity: 64
