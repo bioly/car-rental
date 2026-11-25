@@ -25,7 +25,6 @@ public record RentalPeriod(Instant start, Instant end) {
 
     /** Half-open intervals: a rental ending at 10:00 does not overlap one starting at 10:00. */
     boolean overlaps(RentalPeriod other) {
-        // return start.isBefore(other.end) && other.start.isBefore(end);
-        return !start.isAfter(other.end) && !other.start.isAfter(end);
+        return start.isBefore(other.end) && other.start.isBefore(end);
     }
 }
